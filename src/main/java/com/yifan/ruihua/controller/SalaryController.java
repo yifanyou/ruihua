@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SalaryController {
-	@RequestMapping("")
+	@RequestMapping("/salary")
 	public String show(){
-		return "";
+		return "views/salary";
 	}
 }
