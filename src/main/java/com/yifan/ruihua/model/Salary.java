@@ -138,10 +138,10 @@ public class Salary {
 	public void setQuickReckon(String quickReckon) {
 		this.quickReckon = quickReckon;
 	}
-	public String getiIT() {
+	public String getIIT() {
 		return iIT;
 	}
-	public void setiIT(String iIT) {
+	public void setIIT(String iIT) {
 		this.iIT = iIT;
 	}
 	public String getNetPay() {

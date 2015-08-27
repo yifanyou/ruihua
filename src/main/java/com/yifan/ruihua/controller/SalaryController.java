@@ -1,12 +1,178 @@
 package com.yifan.ruihua.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.WorkbookUtil;
+
+import com.yifan.ruihua.model.Salary;
 
 @Controller
 public class SalaryController {
+	
+	private static final int SERIAL_NO_START = 7;
+	
+	private static String CompanyName = "";
+	private static String PayrollTitle = "";
+	private static String Period = "";
+	private static String Currency = "";
+	private static Map<String, List<Salary>> salarys = null;
+	
 	@RequestMapping("/salary")
 	public String show(){
 		return "views/salary";
+	}
+	
+	@RequestMapping(value="/salary", params={"importExcel"})
+    @ResponseBody
+	public String importExcel(HttpServletRequest request,HttpServletResponse response,
+            @RequestParam("file") MultipartFile file) throws EncryptedDocumentException, InvalidFormatException{
+    	String filePath = "";
+    	//转存上传的文件
+    	if (!file.isEmpty()) {  
+            try {
+                //文件保存路径  
+                filePath = request.getSession().getServletContext().getRealPath("/upload");
+                //判断文件是否存在
+                String tempPath = filePath + file.getOriginalFilename();
+                File tempFile = new File(tempPath);
+                if(tempFile.exists()){
+                	tempFile.delete();
+                }
+                //转存文件  
+                FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, file.getOriginalFilename()));  
+            	
+                //解析转存文件，并保存联系人等
+            	File saveFile = new File(filePath, file.getOriginalFilename());
+            	//Reader in = new FileReader(saveFile);	
+            	//FileInputStream fis = new FileInputStream(saveFile);
+            	
+            	Workbook wb = WorkbookFactory.create(saveFile);
+            	Sheet sheet = wb.getSheet("Payroll schedule");
+            	
+            	CompanyName = sheet.getRow(1).getCell(1).getStringCellValue();
+            	PayrollTitle = sheet.getRow(2).getCell(1).getStringCellValue();
+            	Period = sheet.getRow(3).getCell(1).getStringCellValue();
+            	Currency = sheet.getRow(4).getCell(1).getStringCellValue();
+            	
+
+            	salarys = new HashMap();
+            	int serialNOPos = SERIAL_NO_START;
+            	
+            	
+            	List<Salary> salaryList = new ArrayList<Salary>();
+            	Row row = null;
+           	
+            	do {
+            		row = sheet.getRow(serialNOPos);
+            		String serialNOCessValue = row.getCell(1).getStringCellValue();
+            		if("".equals(serialNOCessValue.trim())
+            				&& !"Total".equals(row.getCell(3).getStringCellValue())){
+            			String location = sheet.getRow(serialNOPos-1).getCell(2).getStringCellValue();
+            			salarys.put(location, salaryList);
+            			salaryList = new ArrayList<Salary>();
+            		}
+            		
+
+            		boolean equals = "Serial No.\n序列号".equals(serialNOCessValue);
+            		boolean e = serialNOCessValue.equals("Serial No.\n序列号");
+            		if(equals){
+            			Salary salary = new Salary();
+            			salary.setSocialBenefitLocation(row.getCell(2).getStringCellValue());
+            			salary.setName(row.getCell(3).getStringCellValue());
+            			salary.setPosition(row.getCell(4).getStringCellValue());
+            			salary.setBasicSalary(row.getCell(5).getStringCellValue());
+            			salary.setBonus(row.getCell(6).getStringCellValue());
+            			salary.setTotalGross(row.getCell(7).getStringCellValue());
+            			salary.setSocialBenefitBasis(row.getCell(8).getStringCellValue());
+            			salary.setPensionEmployee(row.getCell(9).getStringCellValue());
+            			salary.setMedicalEmployee(row.getCell(10).getStringCellValue());
+            			salary.setUnemploymentEmployee(row.getCell(11).getStringCellValue());
+            			salary.setSubtotalOfSocialBenefitsEmployee(row.getCell(12).getStringCellValue());
+            			salary.setHousingFundBasis(row.getCell(13).getStringCellValue());
+            			salary.setHousingFundEmployee(row.getCell(14).getStringCellValue());
+            			salary.setTaxDeduction(row.getCell(15).getStringCellValue());
+            			salary.setTaxableIncome(row.getCell(16).getStringCellValue());
+            			salary.setTaxRate(row.getCell(17).getStringCellValue());
+            			salary.setQuickReckon(row.getCell(18).getStringCellValue());
+            			salary.setIIT(row.getCell(19).getStringCellValue());
+            			salary.setNetPay(row.getCell(20).getStringCellValue());
+            			salary.setPensionEmployer(row.getCell(22).getStringCellValue());
+            			salary.setMedicalEmployer(row.getCell(23).getStringCellValue());
+            			salary.setUnemploymentEmployer(row.getCell(24).getStringCellValue());
+            			salary.setMaternity(row.getCell(25).getStringCellValue());
+            			salary.setWorkRelatedInjury(row.getCell(26).getStringCellValue());
+            			salary.setSubtotalOfSocialBenefitsEmployer(row.getCell(27).getStringCellValue());
+            			salary.setHousingFundEmployer(row.getCell(28).getStringCellValue());
+            			salary.setTotalAmountPersonal(row.getCell(29).getStringCellValue());
+            			salary.setTotalAmountCompany(row.getCell(30).getStringCellValue());
+            			continue;
+            		}else if(serialNOPos == Integer.valueOf(serialNOCessValue)){
+            			Salary salary = new Salary();
+            			salary.setSocialBenefitLocation(row.getCell(2).getStringCellValue());
+            			salary.setName(row.getCell(3).getStringCellValue());
+            			salary.setPosition(row.getCell(4).getStringCellValue());
+            			salary.setBasicSalary(row.getCell(5).getStringCellValue());
+            			salary.setBonus(row.getCell(6).getStringCellValue());
+            			salary.setTotalGross(row.getCell(7).getStringCellValue());
+            			salary.setSocialBenefitBasis(row.getCell(8).getStringCellValue());
+            			salary.setPensionEmployee(row.getCell(9).getStringCellValue());
+            			salary.setMedicalEmployee(row.getCell(10).getStringCellValue());
+            			salary.setUnemploymentEmployee(row.getCell(11).getStringCellValue());
+            			salary.setSubtotalOfSocialBenefitsEmployee(row.getCell(12).getStringCellValue());
+            			salary.setHousingFundBasis(row.getCell(13).getStringCellValue());
+            			salary.setHousingFundEmployee(row.getCell(14).getStringCellValue());
+            			salary.setTaxDeduction(row.getCell(15).getStringCellValue());
+            			salary.setTaxableIncome(row.getCell(16).getStringCellValue());
+            			salary.setTaxRate(row.getCell(17).getStringCellValue());
+            			salary.setQuickReckon(row.getCell(18).getStringCellValue());
+            			salary.setIIT(row.getCell(19).getStringCellValue());
+            			salary.setNetPay(row.getCell(20).getStringCellValue());
+            			salary.setPensionEmployer(row.getCell(22).getStringCellValue());
+            			salary.setMedicalEmployer(row.getCell(23).getStringCellValue());
+            			salary.setUnemploymentEmployer(row.getCell(24).getStringCellValue());
+            			salary.setMaternity(row.getCell(25).getStringCellValue());
+            			salary.setWorkRelatedInjury(row.getCell(26).getStringCellValue());
+            			salary.setSubtotalOfSocialBenefitsEmployer(row.getCell(27).getStringCellValue());
+            			salary.setHousingFundEmployer(row.getCell(28).getStringCellValue());
+            			salary.setTotalAmountPersonal(row.getCell(29).getStringCellValue());
+            			salary.setTotalAmountCompany(row.getCell(30).getStringCellValue());             			
+            			continue;
+            		}
+            		serialNOPos++;
+            	} while(!"Total".equals(row.getCell(3).getStringCellValue()));
+            	
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "error";
+	        }
+	    }else{
+	    	return "fail";
+	    }
+	    
+	    return "success";
 	}
 }

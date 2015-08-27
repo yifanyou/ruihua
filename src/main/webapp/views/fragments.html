@@ -6,7 +6,56 @@
 </head>
 <body>
 <div th:fragment="salarys">
-
+	<table>
+	    <thead>
+	        <tr>
+	        	<th>Serial NO.</th>
+	        	<th>Name</th>
+	        	<th>Email</th>
+	        	<th>Social Benefit Location</th>
+	        	<th>Start Date</th>
+	        	<th>Basic Salary</th>
+	        	<th>Social Benefit Basis</th>
+	        	<th>Pension</th>
+	        	<th>Medical</th>
+	        	<th>Unemployment</th>
+	        	<th>Subtotal of Social Benefits</th>
+	        	<th>Housing Fund Basis</th>
+	        	<th>Housing Fund</th>
+	        	<th>Total Amount</th>
+	        	<th>Tax Deduction</th>
+	        	<th>Taxable Income</th>
+	        	<th>Tax Rate</th>
+	        	<th>Quick Reckon</th>
+	        	<th>IIT</th>
+	        	<th>Net Salary Payable</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr th:each="salary, pos : ${salarys}">
+				<td th:inline="text">[[${pos.count}]]</td>
+				<td th:inline="text">[[${salary.name}]]</td>				
+				<td th:inline="text">[[${salary.email}]]</td>		
+				<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>		
+				<td th:inline="text">[[${salary.startDate}]]</td>				
+				<td th:inline="text">[[${salary.basicSalary}]]</td>				
+				<td th:inline="text">[[${salary.socialBenefitBasis}]]</td>				
+				<td th:inline="text">[[${salary.pensionEmployee}]]</td>				
+				<td th:inline="text">[[${salary.medicalEmployee}]]</td>				
+				<td th:inline="text">[[${salary.unemployment}]]</td>				
+				<td th:inline="text">[[${salary.subtotalOfSocialBenefits}]]</td>				
+				<td th:inline="text">[[${salary.housingFundBasis}]]</td>				
+				<td th:inline="text">[[${salary.housingFund}]]</td>
+				<td th:inline="text">[[${salary.totalAmount}]]</td>				
+				<td th:inline="text">[[${salary.taxDeduction}]]</td>				
+				<td th:inline="text">[[${salary.taxableIncome}]]</td>				
+				<td th:inline="text">[[${salary.taxRate}]]</td>				
+				<td th:inline="text">[[${salary.quickReckon}]]</td>				
+				<td th:inline="text">[[${salary.iIT}]]</td>				
+				<td th:inline="text">[[${salary.netPay}]]</td>														
+	        </tr>
+	    </tbody>
+	</table>
 </div>
 </body>
 </html>

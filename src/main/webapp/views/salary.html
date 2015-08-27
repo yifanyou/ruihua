@@ -1,53 +1,145 @@
 <!DOCTYPE html>
-<html lang="zh-CN"
- xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!-- 
-    <link rel="icon" href="../../favicon.ico" />
- 	-->
-    <title>Starter Template for Bootstrap</title>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<meta name="description" content="" />
+	<meta name="author" content="" />
 
-    <!-- Bootstrap core CSS -->
-    <link href="../resources/plugins/bootstrap/css/bootstrap.min.css" 
-    	th:href="@{/resources/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+	<title>Starter Template for Bootstrap</title>
 
-    <!-- Custom styles for this template -->
-    <link href="../resources/plugins/bootstrap/examples/starter-template.css"
-    	th:href="@{/resources/plugins/bootstrap/examples/starter-template.css}" rel="stylesheet" />
+	<!-- Bootstrap core CSS -->
+	<link href="../resources/plugins/bootstrap/css/bootstrap.min.css"
+		th:href="@{/resources/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../resources/plugins/bootstrap/examples/assets/js/ie-emulation-modes-warning.js"
-    	th:src="@{/resources/plugins/bootstrap/examples/assets/js/ie-emulation-modes-warning.js}"></script>
+	<!-- Custom styles for this template -->
+	<link href="../resources/plugins/bootstrap/examples/starter-template.css"
+		th:href="@{/resources/plugins/bootstrap/examples/starter-template.css}" rel="stylesheet" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<script src="../resources/plugins/bootstrap/examples/assets/js/ie-emulation-modes-warning.js"
+		th:src="@{/resources/plugins/bootstrap/examples/assets/js/ie-emulation-modes-warning.js}"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
-    <div class="container">
+<body>
+	<div class="container">
+		<form id="uploadFile">
+			<input type="file" id="inputFile1" name="file" class="ignore"
+				size="1" onchange="change(this.value)" enctype="multipart/form-data"
+				style="position: absolute; left: 75px; opacity: 0; z-index: 100; cursor: pointer; width: 98px; height: 30px;" />
+			<a class="btn btn-default" style="cursor: pointer;" href="javascript:;" id="upload_file">上传文件</a>
+		</form>
+		<br /> 
+		<a id="importBtn" class="btn btn-default disabled"
+			href="javascript:;" onclick="ajaxFileUpload(this)">导入</a> 
+		<a class="btn btn-default disabled" href="#" onclick="importCancel()">取消</a>
+	</div>
+	<!-- /.container -->
+	<br />
+	<div id="salarys">
+	<table border="1">
+	    <thead>
+	        <tr>
+	        	<th>Serial NO.</th>
+	        	<th>Name</th>
+	        	<th>Email</th>
+	        	<th>Social Benefit Location</th>
+	        	<th>Start Date</th>
+	        	<th>Basic Salary</th>
+	        	<th>Social Benefit Basis</th>
+	        	<th>Pension</th>
+	        	<th>Medical</th>
+	        	<th>Unemployment</th>
+	        	<th>Subtotal of Social Benefits</th>
+	        	<th>Housing Fund Basis</th>
+	        	<th>Housing Fund</th>
+	        	<th>Total Amount</th>
+	        	<th>Tax Deduction</th>
+	        	<th>Taxable Income</th>
+	        	<th>Tax Rate</th>
+	        	<th>Quick Reckon</th>
+	        	<th>IIT</th>
+	        	<th>Net Salary Payable</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr>
+				<td>1</td>	        
+				<td>Aaron Li</td>
+				<td>aaron.li@xx.com</td>
+				<td>Shanghai</td>					        
+				<td>2015-08-27</td>
+				<td>2000.00</td>	        
+				<td>1111.00</td>
+				<td>333.00</td>	        
+				<td>2222.00</td>
+				<td>444.00</td>	        
+				<td>23423.00</td>	
+				<td>34234.00</td>	        
+				<td>2300.00</td>
+				<td>2324.00</td>	
+				<td>2343.00</td>
+				<td>543.00</td>        
+				<td>12%</td>
+				<td>5345.00</td>	        
+				<td>4322.00</td>
+				<td>23423.00</td>	        																																				
+	        </tr>	    
+	    
+<!-- 
+	        <tr th:each="salary, pos : ${salarys}">
+				<td th:inline="text">[[${pos.count}]]</td>
+				<td th:inline="text">[[${salary.name}]]</td>				
+				<td th:inline="text">[[${salary.email}]]</td>		
+				<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>		
+				<td th:inline="text">[[${salary.startDate}]]</td>				
+				<td th:inline="text">[[${salary.basicSalary}]]</td>				
+				<td th:inline="text">[[${salary.socialBenefitBasis}]]</td>				
+				<td th:inline="text">[[${salary.pensionEmployee}]]</td>				
+				<td th:inline="text">[[${salary.medicalEmployee}]]</td>				
+				<td th:inline="text">[[${salary.unemployment}]]</td>				
+				<td th:inline="text">[[${salary.subtotalOfSocialBenefits}]]</td>				
+				<td th:inline="text">[[${salary.housingFundBasis}]]</td>				
+				<td th:inline="text">[[${salary.housingFund}]]</td>
+				<td th:inline="text">[[${salary.totalAmount}]]</td>				
+				<td th:inline="text">[[${salary.taxDeduction}]]</td>				
+				<td th:inline="text">[[${salary.taxableIncome}]]</td>				
+				<td th:inline="text">[[${salary.taxRate}]]</td>				
+				<td th:inline="text">[[${salary.quickReckon}]]</td>				
+				<td th:inline="text">[[${salary.iIT}]]</td>				
+				<td th:inline="text">[[${salary.netPay}]]</td>														
+	        </tr>
+ -->	        
+	    </tbody>
+	</table>	
+	</div>
 
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
+	<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../resources/plugins/jquery/jquery-1.11.2.min.js" 
-    	th:src="@{/resources/plugins/jquery/jquery-1.11.2.min.js}"></script>
-    <script src="../resources/plugins/bootstrap/js/bootstrap.min.js"
-    	th:src="@{/resources/plugins/bootstrap/js/bootstrap.min.js}"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../resources/plugins/bootstrap/examples/assets/js/ie10-viewport-bug-workaround.js"
-    	th:src="@{/resources/plugins/bootstrap/examples/assets/js/ie10-viewport-bug-workaround.js}"></script>
-  </body>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="../resources/plugins/jquery/jquery-1.11.2.min.js"
+		th:src="@{/resources/plugins/jquery/jquery-1.11.2.min.js}"></script>
+	<script src="../resources/plugins/bootstrap/js/bootstrap.min.js"
+		th:src="@{/resources/plugins/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script
+		src="../resources/plugins/bootstrap/examples/assets/js/ie10-viewport-bug-workaround.js"
+		th:src="@{/resources/plugins/bootstrap/examples/assets/js/ie10-viewport-bug-workaround.js}"></script>
+	<script src="../resources/plugins/ajaxfileupload/ajaxfileupload.js"
+		th:src="@{/resources/plugins/ajaxfileupload/ajaxfileupload.js}"></script>
+	<script src="../resources/js/common.js"
+		th:src="@{/resources/js/common.js}"></script>		
+	<script src="../resources/js/salary.js"
+		th:src="@{/resources/js/salary.js}"></script>
+
+</body>
 </html>
