@@ -41,6 +41,8 @@ ajaxFileUpload = function(e) {
 				uploadForm.reset();
 				$("#upload_file").text("上传文件");
 				$("#importBtn").addClass("disabled");
+				
+				$("#salarys").html(data);
 			} else {
 				alert("导入失败");
 			}

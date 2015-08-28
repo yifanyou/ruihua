@@ -21,6 +21,8 @@ public class Salary {
 	private String quickReckon;
 	private String iIT;
 	private String netPay;
+	private String totalAmount; //subtotalOfSocialBenefitsEmployee + housingFundEmployee
+	
 	//Employer portion
 	private String pensionEmployer;
 	private String medicalEmployer;
@@ -31,9 +33,10 @@ public class Salary {
 	private String housingFundEmployer;
 	private String totalAmountPersonal;
 	private String totalAmountCompany;
-	//others
-	private String totalAmount;
 	
+	//others
+	private String startDate;
+	private String email;
 	
 	public String getSocialBenefitLocation() {
 		return socialBenefitLocation;
@@ -210,6 +213,18 @@ public class Salary {
 	}
 	public void setTotalAmount(String totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

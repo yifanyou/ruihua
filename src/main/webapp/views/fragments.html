@@ -1,61 +1,84 @@
 <!DOCTYPE html>
-<html lang="zh-CN"
- xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>fragments</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>fragments</title>
 </head>
 <body>
 <div th:fragment="salarys">
-	<table>
-	    <thead>
-	        <tr>
-	        	<th>Serial NO.</th>
-	        	<th>Name</th>
-	        	<th>Email</th>
-	        	<th>Social Benefit Location</th>
-	        	<th>Start Date</th>
-	        	<th>Basic Salary</th>
-	        	<th>Social Benefit Basis</th>
-	        	<th>Pension</th>
-	        	<th>Medical</th>
-	        	<th>Unemployment</th>
-	        	<th>Subtotal of Social Benefits</th>
-	        	<th>Housing Fund Basis</th>
-	        	<th>Housing Fund</th>
-	        	<th>Total Amount</th>
-	        	<th>Tax Deduction</th>
-	        	<th>Taxable Income</th>
-	        	<th>Tax Rate</th>
-	        	<th>Quick Reckon</th>
-	        	<th>IIT</th>
-	        	<th>Net Salary Payable</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr th:each="salary, pos : ${salarys}">
-				<td th:inline="text">[[${pos.count}]]</td>
-				<td th:inline="text">[[${salary.name}]]</td>				
-				<td th:inline="text">[[${salary.email}]]</td>		
-				<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>		
-				<td th:inline="text">[[${salary.startDate}]]</td>				
-				<td th:inline="text">[[${salary.basicSalary}]]</td>				
-				<td th:inline="text">[[${salary.socialBenefitBasis}]]</td>				
-				<td th:inline="text">[[${salary.pensionEmployee}]]</td>				
-				<td th:inline="text">[[${salary.medicalEmployee}]]</td>				
-				<td th:inline="text">[[${salary.unemployment}]]</td>				
-				<td th:inline="text">[[${salary.subtotalOfSocialBenefits}]]</td>				
-				<td th:inline="text">[[${salary.housingFundBasis}]]</td>				
-				<td th:inline="text">[[${salary.housingFund}]]</td>
-				<td th:inline="text">[[${salary.totalAmount}]]</td>				
-				<td th:inline="text">[[${salary.taxDeduction}]]</td>				
-				<td th:inline="text">[[${salary.taxableIncome}]]</td>				
-				<td th:inline="text">[[${salary.taxRate}]]</td>				
-				<td th:inline="text">[[${salary.quickReckon}]]</td>				
-				<td th:inline="text">[[${salary.iIT}]]</td>				
-				<td th:inline="text">[[${salary.netPay}]]</td>														
-	        </tr>
-	    </tbody>
-	</table>
+	<div th:each="key:${keys}">
+		<table th:with="salaryList=${salarys.get(key)}" border="1">
+			<thead>
+				<tr>
+					<th>Serial NO.</th>
+					<th>Name<br/>姓名</th>
+					<th>Email</th>
+					<th>Social Benefit Location</th>
+					<th>Start Date</th>
+					<th>Basic Salary</th>
+					<th>Bonus</th>
+					<th>Total Gross</th>
+					<th>Social Benefit Basis</th>
+					<th th:inline="text">[[${salaryList.get(0).pensionEmployee}]]</th>					
+					<th th:inline="text">[[${salaryList.get(0).medicalEmployee}]]</th>					
+					<th th:inline="text">[[${salaryList.get(0).unemploymentEmployee}]]</th>	
+					<th>Subtotal of Social Benefits</th>
+					<th>Housing Fund Basis</th>				
+					<th th:inline="text">[[${salaryList.get(0).housingFundEmployee}]]</th>
+					<th>Tax Deduction</th>
+					<th>Tax Rate</th>
+					<th>Quick Reckon</th>
+					<th>IIT</th>
+					<th>Net Pay</th>
+					<th th:inline="text">[[${salaryList.get(0).pensionEmployer}]]</th>					
+					<th th:inline="text">[[${salaryList.get(0).medicalEmployer}]]</th>					
+					<th th:inline="text">[[${salaryList.get(0).unemploymentEmployer}]]</th>					
+					<th th:inline="text">[[${salaryList.get(0).maternity}]]</th>
+					<th th:inline="text">[[${salaryList.get(0).workRelatedInjury}]]</th>
+					<th>Subtotal of Social Benefits</th>					
+					<th th:inline="text">[[${salaryList.get(0).housingFundEmployer}]]</th>
+					<th>Total Amount(Personal)</th>
+					<th>Total Amount(Company)</th>															
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="salary, pos:${#lists.toList(salaryList)}" >
+					<div th:if="${pos.count>1}" th:remove="tag">
+						<td th:inline="text">[[${pos.index}]]</td>
+						<td th:inline="text">[[${salary.name}]]</td>
+						<td th:inline="text">[[${salary.email}]]</td>
+						<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>
+						<td th:inline="text">[[${salary.startDate}]]</td>
+						<td th:inline="text">[[${salary.basicSalary}]]</td>
+						<td th:inline="text">[[${salary.bonus}]]</td>
+						<td th:inline="text">[[${salary.totalGross}]]</td>
+						<td th:inline="text">[[${salary.socialBenefitBasis}]]</td>
+						<td th:inline="text">[[${salary.pensionEmployee}]]</td>
+						<td th:inline="text">[[${salary.medicalEmployee}]]</td>
+						<td th:inline="text">[[${salary.unemploymentEmployee}]]</td>
+						<td th:inline="text">[[${salary.subtotalOfSocialBenefitsEmployee}]]</td>	
+						<td th:inline="text">[[${salary.housingFundBasis}]]</td>
+						<td th:inline="text">[[${salary.housingFundEmployee}]]</td>					
+						<td th:inline="text">[[${salary.taxDeduction}]]</td>
+						<td th:inline="text">[[${salary.taxRate}]]</td>
+						<td th:inline="text">[[${salary.quickReckon}]]</td>
+						<td th:inline="text">[[${salary.iIT}]]</td>
+						<td th:inline="text">[[${salary.netPay}]]</td>	
+						<td th:inline="text">[[${salary.pensionEmployer}]]</td>							
+						<td th:inline="text">[[${salary.medicalEmployer}]]</td>							
+						<td th:inline="text">[[${salary.unemploymentEmployer}]]</td>							
+						<td th:inline="text">[[${salary.maternity}]]</td>							
+						<td th:inline="text">[[${salary.workRelatedInjury}]]</td>	
+						<td th:inline="text">[[${salary.subtotalOfSocialBenefitsEmployer}]]</td>	
+						<td th:inline="text">[[${salary.housingFundEmployer}]]</td>												
+						<td th:inline="text">[[${salary.totalAmountPersonal}]]</td>						
+						<td th:inline="text">[[${salary.totalAmountCompany}]]</td>																	
+					</div>																													
+				</tr>
+			</tbody>
+		</table>	
+	</div>
 </div>
 </body>
 </html>
