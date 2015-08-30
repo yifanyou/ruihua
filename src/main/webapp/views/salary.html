@@ -8,7 +8,7 @@
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 
-	<title>Starter Template for Bootstrap</title>
+	<title>RSM China Consulting Payroll Auto Distribution System</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="../resources/plugins/bootstrap/css/bootstrap.min.css"
@@ -28,101 +28,142 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- jquery steps -->
+    <!-- 
+	<link href="../resources/plugins/jquery.steps-1.1.0/css/normalize.css"
+		th:href="@{/resources/plugins/jquery.steps-1.1.0/css/normalize.css}" rel="stylesheet" />
+ 	-->		
+	<link href="../resources/plugins/jquery.steps-1.1.0/css/main.css"
+		th:href="@{/resources/plugins/jquery.steps-1.1.0/css/main.css}" rel="stylesheet" />
+	<link href="../resources/plugins/jquery.steps-1.1.0/css/jquery.steps.css"
+		th:href="@{/resources/plugins/jquery.steps-1.1.0/css/jquery.steps.css}" rel="stylesheet" />
+						    
 </head>
 
 <body>
-	<div class="container">
-		<form id="uploadFile">
-			<input type="file" id="inputFile1" name="file" class="ignore"
-				size="1" onchange="change(this.value)" enctype="multipart/form-data"
-				style="position: absolute; left: 75px; opacity: 0; z-index: 100; cursor: pointer; width: 98px; height: 30px;" />
-			<a class="btn btn-default" style="cursor: pointer;" href="javascript:;" id="upload_file">上传文件</a>
-		</form>
-		<br /> 
-		<a id="importBtn" class="btn btn-default disabled"
-			href="javascript:;" onclick="ajaxFileUpload(this)">导入</a> 
-		<a class="btn btn-default disabled" href="#" onclick="importCancel()">取消</a>
-	</div>
-	<!-- /.container -->
-	<br />
-	<div id="salarys">
-	<table border="1">
-	    <thead>
-	        <tr>
-	        	<th>Serial NO.</th>
-	        	<th>Name</th>
-	        	<th>Email</th>
-	        	<th>Social Benefit Location</th>
-	        	<th>Start Date</th>
-	        	<th>Basic Salary</th>
-	        	<th>Social Benefit Basis</th>
-	        	<th>Pension</th>
-	        	<th>Medical</th>
-	        	<th>Unemployment</th>
-	        	<th>Subtotal of Social Benefits</th>
-	        	<th>Housing Fund Basis</th>
-	        	<th>Housing Fund</th>
-	        	<th>Total Amount</th>
-	        	<th>Tax Deduction</th>
-	        	<th>Taxable Income</th>
-	        	<th>Tax Rate</th>
-	        	<th>Quick Reckon</th>
-	        	<th>IIT</th>
-	        	<th>Net Salary Payable</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr>
-				<td>1</td>	        
-				<td>Aaron Li</td>
-				<td>aaron.li@xx.com</td>
-				<td>Shanghai</td>					        
-				<td>2015-08-27</td>
-				<td>2000.00</td>	        
-				<td>1111.00</td>
-				<td>333.00</td>	        
-				<td>2222.00</td>
-				<td>444.00</td>	        
-				<td>23423.00</td>	
-				<td>34234.00</td>	        
-				<td>2300.00</td>
-				<td>2324.00</td>	
-				<td>2343.00</td>
-				<td>543.00</td>        
-				<td>12%</td>
-				<td>5345.00</td>	        
-				<td>4322.00</td>
-				<td>23423.00</td>	        																																				
-	        </tr>	    
-	    
-<!-- 
-	        <tr th:each="salary, pos : ${salarys}">
-				<td th:inline="text">[[${pos.count}]]</td>
-				<td th:inline="text">[[${salary.name}]]</td>				
-				<td th:inline="text">[[${salary.email}]]</td>		
-				<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>		
-				<td th:inline="text">[[${salary.startDate}]]</td>				
-				<td th:inline="text">[[${salary.basicSalary}]]</td>				
-				<td th:inline="text">[[${salary.socialBenefitBasis}]]</td>				
-				<td th:inline="text">[[${salary.pensionEmployee}]]</td>				
-				<td th:inline="text">[[${salary.medicalEmployee}]]</td>				
-				<td th:inline="text">[[${salary.unemployment}]]</td>				
-				<td th:inline="text">[[${salary.subtotalOfSocialBenefits}]]</td>				
-				<td th:inline="text">[[${salary.housingFundBasis}]]</td>				
-				<td th:inline="text">[[${salary.housingFund}]]</td>
-				<td th:inline="text">[[${salary.totalAmount}]]</td>				
-				<td th:inline="text">[[${salary.taxDeduction}]]</td>				
-				<td th:inline="text">[[${salary.taxableIncome}]]</td>				
-				<td th:inline="text">[[${salary.taxRate}]]</td>				
-				<td th:inline="text">[[${salary.quickReckon}]]</td>				
-				<td th:inline="text">[[${salary.iIT}]]</td>				
-				<td th:inline="text">[[${salary.netPay}]]</td>														
-	        </tr>
- -->	        
-	    </tbody>
-	</table>	
-	</div>
+	<div>
+        <div id="wizard">
+            <h2>导入Excel(Import Excel)</h2>
+            <section>
+	            <br/>
+	        	<div class="container">
+					<form id="uploadFile">
+						<input type="file" id="inputFile1" name="file" class="ignore"
+							size="1" onchange="change(this.value)" enctype="multipart/form-data"
+							style="position: absolute; left: 75px; opacity: 0; z-index: 100; cursor: pointer; width: 98px; height: 30px;" />
+						<a class="btn btn-default" style="cursor: pointer;" href="javascript:;" id="upload_file">上传文件</a>
+					</form>
+					<br /> 
+					<a id="importBtn" class="btn btn-default disabled"
+						href="javascript:;" onclick="ajaxFileUpload(this)">导入</a> 
+					<!-- 
+					<a id="importCancel" class="btn btn-default disabled" href="#" onclick="importCancel()">取消</a>
+					 -->
+				</div>
+				<!-- /.container -->
+				<br />
+				<div id="salarys" style="position:relative;overflow:auto;width:100%;height:70%">
+				<table border="1">
+				    <thead>
+				        <tr>
+				        	<th>Serial NO.</th>
+				        	<th>Name</th>
+				        	<th>Email</th>
+				        	<th>Social Benefit Location</th>
+				        	<th>Start Date</th>
+				        	<th>Basic Salary</th>
+				        	<th>Social Benefit Basis</th>
+				        	<th>Pension</th>
+				        	<th>Medical</th>
+				        	<th>Unemployment</th>
+				        	<th>Subtotal of Social Benefits</th>
+				        	<th>Housing Fund Basis</th>
+				        	<th>Housing Fund</th>
+				        	<th>Total Amount</th>
+				        	<th>Tax Deduction</th>
+				        	<th>Taxable Income</th>
+				        	<th>Tax Rate</th>
+				        	<th>Quick Reckon</th>
+				        	<th>IIT</th>
+				        	<th>Net Salary Payable</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr>
+							<td>1</td>	        
+							<td>Kitty</td>
+							<td>kitty@xx.com</td>
+							<td>Shanghai</td>					        
+							<td>2015-08-27</td>
+							<td>2000.00</td>	        
+							<td>1111.00</td>
+							<td>333.00</td>	        
+							<td>2222.00</td>
+							<td>444.00</td>	        
+							<td>23423.00</td>	
+							<td>34234.00</td>	        
+							<td>2300.00</td>
+							<td>2324.00</td>	
+							<td>2343.00</td>
+							<td>543.00</td>        
+							<td>12%</td>
+							<td>5345.00</td>	        
+							<td>4322.00</td>
+							<td>23423.00</td>	        																																				
+				        </tr>	           
+				    </tbody>
+				</table>	
+				</div>
+            </section>
 
+            <h2>输入Email信息(Input Email Information)</h2>
+            <section>
+                <legend>发送邮箱信息</legend> 
+            	<div class="row">           	
+            		<div class="col-md-6">
+		                <form id="emailForm" name="emailForm">
+		                	<div class="form-group">
+		                        <label for="email">电子邮箱(Email) * </label>
+		                        <input type="email" class="form-control" placeholder="Email" id="email" name="email" required="required" />
+			               </div>
+			               <div class="form-group">         
+		                        <label for="password">密码(Password) *</label>
+		                        <input type="password" class="form-control" placeholder="Password" id="password" name="password" required="required" />
+		                    </div>
+		                    <button type="button" name="test" onclick="tectConnect()">测试连接邮件</button>
+		                  	<button type="reset" name="test" onclick="resetConnect()">重置</button>
+		                  	<img id="loading" src="" />
+		                </form>
+	                </div>
+                </div>
+                 <div class="row">
+                 	<br/>
+                 	<b>
+                		<p id="currentEmail">&nbsp;&nbsp;&nbsp;&nbsp;当前邮箱：</p>
+                	</b>
+                </div>
+            </section>
+
+            <h2>发送Email(Send Email)</h2>
+            <section>
+            	<p id="howmany">共有封邮件需要发送</p>
+            	<br />
+            	<a id="batchBtn" class="btn btn-default" href="javascript:;" onclick="batchSendEmail()">确认发送</a> 
+                <br />
+                <br />
+                <br />
+                <b>
+                <p>状态:</p>
+                </b>
+                <div>
+					<p id="status">未发送...</p>
+                </div>
+            </section>
+        </div>
+	</div>
+	
+	
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -137,9 +178,18 @@
 	<script src="../resources/plugins/ajaxfileupload/ajaxfileupload.js"
 		th:src="@{/resources/plugins/ajaxfileupload/ajaxfileupload.js}"></script>
 	<script src="../resources/js/common.js"
-		th:src="@{/resources/js/common.js}"></script>		
+		th:src="@{/resources/js/common.js}"></script>	
+	<script src="../resources/plugins/jquery/jquery.cookie-1.3.1.js"
+		th:src="@{/resources/plugins/jquery/jquery.cookie-1.3.1.js}"></script>
+	<script src="../resources/plugins/modernizr/modernizr-2.6.2.min.js"
+		th:src="@{/resources/plugins/modernizr/modernizr-2.6.2.min.js}"></script>		
+	<script src="../resources/plugins/jquery.steps-1.1.0/jquery.steps.js"
+		th:src="@{/resources/plugins/jquery.steps-1.1.0/jquery.steps.js}"></script>		
 	<script src="../resources/js/salary.js"
 		th:src="@{/resources/js/salary.js}"></script>
 
 </body>
+<footer style="text-align: center;">
+<p><b>2015 All Rights Reserved by RSM China Consulting</b></p>
+</footer>
 </html>

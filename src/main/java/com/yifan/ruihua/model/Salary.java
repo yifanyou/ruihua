@@ -1,5 +1,9 @@
 package com.yifan.ruihua.model;
 
+/**
+ * @author Administrator
+ *
+ */
 public class Salary {
 	//Employee portion
 	private String socialBenefitLocation;
@@ -35,6 +39,7 @@ public class Salary {
 	private String totalAmountCompany;
 	
 	//others
+	private String pos;
 	private String startDate;
 	private String email;
 	
@@ -225,6 +230,12 @@ public class Salary {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getPos() {
+		return pos;
+	}
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
 	
 }

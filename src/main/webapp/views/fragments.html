@@ -12,6 +12,7 @@
 			<thead>
 				<tr>
 					<th>Serial NO.</th>
+					<th>pdf</th>
 					<th>Name<br/>姓名</th>
 					<th>Email</th>
 					<th>Social Benefit Location</th>
@@ -45,7 +46,8 @@
 			<tbody>
 				<tr th:each="salary, pos:${#lists.toList(salaryList)}" >
 					<div th:if="${pos.count>1}" th:remove="tag">
-						<td th:inline="text">[[${pos.index}]]</td>
+						<td th:inline="text">[[${salary.pos}]]</td>
+						<td><a th:href="@{/salary?showPdf(pos=${salary.pos})}" target="_blank">查看pdf</a></td>
 						<td th:inline="text">[[${salary.name}]]</td>
 						<td th:inline="text">[[${salary.email}]]</td>
 						<td th:inline="text">[[${salary.socialBenefitLocation}]]</td>
@@ -79,6 +81,7 @@
 			</tbody>
 		</table>	
 	</div>
+	<input type="hidden" id="count" name="count" th:value="${countPeople}" />
 </div>
 </body>
 </html>
