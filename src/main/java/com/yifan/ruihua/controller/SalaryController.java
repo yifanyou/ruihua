@@ -527,9 +527,9 @@ public class SalaryController {
 	    try {
 			message.setFrom(new InternetAddress("107247222@qq.com"));
 		    // 设置主题	    
-		    message.setSubject("测试邮件");
+		    message.setSubject("Test Email");
 		    // 设置邮件内容
-		    message.setText("测试成功-来自RSM China Consulting Payroll Auto Distribution System");
+		    message.setText("Test successfully!-From RSM China Consulting Payroll Auto Distribution System");
 		    // 设置收件人
 		    message.setRecipient(RecipientType.TO, new InternetAddress(email));
 		    message.saveChanges();
