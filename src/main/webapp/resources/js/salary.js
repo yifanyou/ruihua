@@ -3,52 +3,7 @@ var isConnect = false;
 var isBatchSend = false;
 
 $(document).ready(function(){
-    $("#wizard").steps({
-        headerTag: "h2",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        stepsOrientation: "vertical",
-        labels:{
-        	finish:"完成",
-        	next:"下一步",
-        	previous:"上一步",
-        	loading:"加载中..."
-        },
-        onStepChanging: function (event, currentIndex, newIndex) { 
-        	if(currentIndex==0&&newIndex==1){
-        		if(isUpload==false){
-        			alert("请上传并导入Excel文件！");
-        			return false;
-        		}
-        	}else if(currentIndex==1&&newIndex==2){
-        		if(isConnect==false){
-        			alert("请输入邮箱信息并测试连接邮箱！");
-        			return false;
-        		}else{
-        			var count = $("#count").val();
-        			$("#howmany").text("共有"+count+"封邮件需要发送");
-        		}	
-        	}else if(currentIndex==2&&newIndex==1){
-        		if(isBatchSend){
-        			alert("批量发送邮件已成功，请点击完成初始化页面！");
-        			return false;
-        		}        		
-        	}else if(currentIndex==2&&newIndex==0){
-        		if(isBatchSend){
-        			alert("批量发送邮件已成功，请点击完成初始化页面！");
-        			return false;
-        		}        		
-        	}
-        	
-        	return true; 
-        },
-        onFinished: function (event, currentIndex) {
-        	if(isBatchSend==true)
-        		location.reload();
-        	else
-        		location.reload();
-        }
-    });
+
 })
 
 change = function(val) {
